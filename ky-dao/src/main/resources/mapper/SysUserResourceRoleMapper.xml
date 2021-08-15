@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kunyuesoft.dao.mapper.SysUserResourceRoleMapper">
+    
+    <resultMap type="com.kunyuesoft.model.domain.SysUserResourceRole" id="SysUserResourceRoleResult">
+        <result property="userResourceRoleid"    column="user_resource_roleid"    />
+        <result property="userId"    column="user_id"    />
+        <result property="resourceRoleId"    column="resource_role_id"    />
+    </resultMap>
+
+    <sql id="selectSysUserResourceRoleVo">
+        select user_resource_roleid, user_id, resource_role_id from sys_user_resource_role
+    </sql>
+
+    <select id="selectSysUserResourceRoleList" parameterType="com.kunyuesoft.model.domain.SysUserResourceRole" resultMap="SysUserResourceRoleResult">
+        <include refid="selectSysUserResourceRoleVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectSysUserResourceRoleById" parameterType="Long" resultMap="SysUserResourceRoleResult">
+        <include refid="selectSysUserResourceRoleVo"/>
+        where user_resource_roleid = #{userResourceRoleid}
+    </select>
+        
+    <insert id="insertSysUserResourceRole" parameterType="com.kunyuesoft.model.domain.SysUserResourceRole" useGeneratedKeys="true" keyProperty="userResourceRoleid">
+        insert into sys_user_resource_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="resourceRoleId != null">resource_role_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="resourceRoleId != null">#{resourceRoleId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysUserResourceRole" parameterType="com.kunyuesoft.model.domain.SysUserResourceRole">
+        update sys_user_resource_role
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="resourceRoleId != null">resource_role_id = #{resourceRoleId},</if>
+        </trim>
+        where user_resource_roleid = #{userResourceRoleid}
+    </update>
+
+    <delete id="deleteSysUserResourceRoleById" parameterType="Long">
+        delete from sys_user_resource_role where user_resource_roleid = #{userResourceRoleid}
+    </delete>
+
+    <delete id="deleteSysUserResourceRoleByIds" parameterType="String">
+        delete from sys_user_resource_role where user_resource_roleid in 
+        <foreach item="userResourceRoleid" collection="array" open="(" separator="," close=")">
+            #{userResourceRoleid}
+        </foreach>
+    </delete>
+    
+</mapper>

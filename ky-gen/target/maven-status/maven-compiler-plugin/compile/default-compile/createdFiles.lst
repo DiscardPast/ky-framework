@@ -1,0 +1,16 @@
+com\kunyuesoft\gen\config\GenConfig.class
+com\kunyuesoft\gen\service\IGenTableColumnService.class
+com\kunyuesoft\gen\util\VelocityUtils.class
+com\kunyuesoft\gen\mapper\GenTableColumnMapper.class
+com\kunyuesoft\gen\domain\GenTableColumn.class
+com\kunyuesoft\gen\domain\GenTable.class
+com\kunyuesoft\gen\service\IGenTableService.class
+com\kunyuesoft\gen\constants\GenConstants.class
+com\kunyuesoft\gen\controller\GenController.class
+com\kunyuesoft\gen\service\impl\GenTableColumnServiceImpl.class
+com\kunyuesoft\gen\service\impl\GenTableServiceImpl.class
+com\kunyuesoft\gen\mapper\GenTableMapper.class
+com\kunyuesoft\gen\config\MyBatisConfig.class
+com\kunyuesoft\gen\KunYueSoftGenApplication.class
+com\kunyuesoft\gen\util\GenUtils.class
+com\kunyuesoft\gen\util\VelocityInitializer.class

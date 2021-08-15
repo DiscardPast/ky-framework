@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="ky-feign" />
+        <module name="ky-gen" />
+        <module name="ky-service" />
+        <module name="ky-dao" />
+        <module name="ky-model" />
+        <module name="ky-common" />
+        <module name="ky-api" />
+        <module name="ky-admin" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ky-admin" options="-parameters" />
+      <module name="ky-api" options="-parameters" />
+      <module name="ky-common" options="-parameters" />
+      <module name="ky-dao" options="-parameters" />
+      <module name="ky-gen" options="-parameters" />
+      <module name="ky-model" options="-parameters" />
+      <module name="ky-parent" options="" />
+      <module name="ky-service" options="-parameters" />
+    </option>
+  </component>
+</project>

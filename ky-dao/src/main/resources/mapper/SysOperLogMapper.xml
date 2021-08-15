@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kunyuesoft.dao.mapper.SysOperLogMapper">
+    
+    <resultMap type="com.kunyuesoft.model.domain.SysOperLog" id="SysOperLogResult">
+        <result property="operId"    column="oper_id"    />
+        <result property="title"    column="title"    />
+        <result property="businessType"    column="business_type"    />
+        <result property="method"    column="method"    />
+        <result property="requestMethod"    column="request_method"    />
+        <result property="operatorType"    column="operator_type"    />
+        <result property="operName"    column="oper_name"    />
+        <result property="deptName"    column="dept_name"    />
+        <result property="operUrl"    column="oper_url"    />
+        <result property="operIp"    column="oper_ip"    />
+        <result property="operLocation"    column="oper_location"    />
+        <result property="operParam"    column="oper_param"    />
+        <result property="jsonResult"    column="json_result"    />
+        <result property="status"    column="status"    />
+        <result property="errorMsg"    column="error_msg"    />
+        <result property="operTime"    column="oper_time"    />
+    </resultMap>
+
+    <sql id="selectSysOperLogVo">
+        select oper_id, title, business_type, method, request_method, operator_type, oper_name, dept_name, oper_url, oper_ip, oper_location, oper_param, json_result, status, error_msg, oper_time from sys_oper_log
+    </sql>
+
+    <select id="selectSysOperLogList" parameterType="com.kunyuesoft.model.domain.SysOperLog" resultMap="SysOperLogResult">
+        <include refid="selectSysOperLogVo"/>
+        <where>  
+            <if test="operName != null  and operName != ''"> and oper_name like concat('%', #{operName}, '%')</if>
+            <if test="deptName != null  and deptName != ''"> and dept_name like concat('%', #{deptName}, '%')</if>
+            <if test="operUrl != null  and operUrl != ''"> and oper_url like concat('%', #{operUrl}, '%')</if>
+            <if test="operIp != null  and operIp != ''"> and oper_ip like concat('%', #{operIp}, '%')</if>
+            <if test="operLocation != null  and operLocation != ''"> and oper_location like concat('%', #{operLocation}, '%')</if>
+            <if test="operParam != null  and operParam != ''"> and oper_param like concat('%', #{operParam}, '%')</if>
+            <if test="jsonResult != null  and jsonResult != ''"> and json_result like concat('%', #{jsonResult}, '%')</if>
+            <if test="status != null  and status != ''"> and status like concat('%', #{status}, '%')</if>
+            <if test="errorMsg != null  and errorMsg != ''"> and error_msg like concat('%', #{errorMsg}, '%')</if>
+            <if test="operTime != null "> and oper_time like concat('%', #{operTime}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectSysOperLogById" parameterType="Long" resultMap="SysOperLogResult">
+        <include refid="selectSysOperLogVo"/>
+        where oper_id = #{operId}
+    </select>
+        
+    <insert id="insertSysOperLog" parameterType="com.kunyuesoft.model.domain.SysOperLog" useGeneratedKeys="true" keyProperty="operId">
+        insert into sys_oper_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null and title != ''">title,</if>
+            <if test="businessType != null and businessType != ''">business_type,</if>
+            <if test="method != null and method != ''">method,</if>
+            <if test="requestMethod != null and requestMethod != ''">request_method,</if>
+            <if test="operatorType != null and operatorType != ''">operator_type,</if>
+            <if test="operName != null and operName != ''">oper_name,</if>
+            <if test="deptName != null and deptName != ''">dept_name,</if>
+            <if test="operUrl != null and operUrl != ''">oper_url,</if>
+            <if test="operIp != null and operIp != ''">oper_ip,</if>
+            <if test="operLocation != null and operLocation != ''">oper_location,</if>
+            <if test="operParam != null and operParam != ''">oper_param,</if>
+            <if test="jsonResult != null and jsonResult != ''">json_result,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="errorMsg != null and errorMsg != ''">error_msg,</if>
+            <if test="operTime != null">oper_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null and title != ''">#{title},</if>
+            <if test="businessType != null and businessType != ''">#{businessType},</if>
+            <if test="method != null and method != ''">#{method},</if>
+            <if test="requestMethod != null and requestMethod != ''">#{requestMethod},</if>
+            <if test="operatorType != null and operatorType != ''">#{operatorType},</if>
+            <if test="operName != null and operName != ''">#{operName},</if>
+            <if test="deptName != null and deptName != ''">#{deptName},</if>
+            <if test="operUrl != null and operUrl != ''">#{operUrl},</if>
+            <if test="operIp != null and operIp != ''">#{operIp},</if>
+            <if test="operLocation != null and operLocation != ''">#{operLocation},</if>
+            <if test="operParam != null and operParam != ''">#{operParam},</if>
+            <if test="jsonResult != null and jsonResult != ''">#{jsonResult},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="errorMsg != null and errorMsg != ''">#{errorMsg},</if>
+            <if test="operTime != null">#{operTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysOperLog" parameterType="com.kunyuesoft.model.domain.SysOperLog">
+        update sys_oper_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="businessType != null and businessType != ''">business_type = #{businessType},</if>
+            <if test="method != null and method != ''">method = #{method},</if>
+            <if test="requestMethod != null and requestMethod != ''">request_method = #{requestMethod},</if>
+            <if test="operatorType != null and operatorType != ''">operator_type = #{operatorType},</if>
+            <if test="operName != null and operName != ''">oper_name = #{operName},</if>
+            <if test="deptName != null and deptName != ''">dept_name = #{deptName},</if>
+            <if test="operUrl != null and operUrl != ''">oper_url = #{operUrl},</if>
+            <if test="operIp != null and operIp != ''">oper_ip = #{operIp},</if>
+            <if test="operLocation != null and operLocation != ''">oper_location = #{operLocation},</if>
+            <if test="operParam != null and operParam != ''">oper_param = #{operParam},</if>
+            <if test="jsonResult != null and jsonResult != ''">json_result = #{jsonResult},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="errorMsg != null and errorMsg != ''">error_msg = #{errorMsg},</if>
+            <if test="operTime != null">oper_time = #{operTime},</if>
+        </trim>
+        where oper_id = #{operId}
+    </update>
+
+    <delete id="deleteSysOperLogById" parameterType="Long">
+        delete from sys_oper_log where oper_id = #{operId}
+    </delete>
+
+    <delete id="deleteSysOperLogByIds" parameterType="String">
+        delete from sys_oper_log where oper_id in 
+        <foreach item="operId" collection="array" open="(" separator="," close=")">
+            #{operId}
+        </foreach>
+    </delete>
+    
+</mapper>

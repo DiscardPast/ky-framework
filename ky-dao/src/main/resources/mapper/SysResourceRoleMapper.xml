@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kunyuesoft.dao.mapper.SysResourceRoleMapper">
+    
+    <resultMap type="com.kunyuesoft.model.domain.SysResourceRole" id="SysResourceRoleResult">
+        <result property="resourceRoleId"    column="resource_role_id"    />
+        <result property="resourceRoleName"    column="resource_role_name"    />
+        <result property="resourceRoleKey"    column="resource_role_key"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectSysResourceRoleVo">
+        select resource_role_id, resource_role_name, resource_role_key, create_by, create_time, update_by, update_time, is_deleted from sys_resource_role
+    </sql>
+
+    <select id="selectSysResourceRoleList" parameterType="com.kunyuesoft.model.domain.SysResourceRole" resultMap="SysResourceRoleResult">
+        <include refid="selectSysResourceRoleVo"/>
+        <where>  
+            <if test="resourceRoleName != null  and resourceRoleName != ''"> and resource_role_name like concat('%', #{resourceRoleName}, '%')</if>
+            <if test="resourceRoleKey != null  and resourceRoleKey != ''"> and resource_role_key like concat('%', #{resourceRoleKey}, '%')</if>
+            <if test="isDeleted != null  and isDeleted != ''"> and is_deleted like concat('%', #{isDeleted}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectSysResourceRoleById" parameterType="Long" resultMap="SysResourceRoleResult">
+        <include refid="selectSysResourceRoleVo"/>
+        where resource_role_id = #{resourceRoleId}
+    </select>
+        
+    <insert id="insertSysResourceRole" parameterType="com.kunyuesoft.model.domain.SysResourceRole" useGeneratedKeys="true" keyProperty="resourceRoleId">
+        insert into sys_resource_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="resourceRoleName != null and resourceRoleName != ''">resource_role_name,</if>
+            <if test="resourceRoleKey != null and resourceRoleKey != ''">resource_role_key,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null and updateBy != ''">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDeleted != null and isDeleted != ''">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="resourceRoleName != null and resourceRoleName != ''">#{resourceRoleName},</if>
+            <if test="resourceRoleKey != null and resourceRoleKey != ''">#{resourceRoleKey},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDeleted != null and isDeleted != ''">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysResourceRole" parameterType="com.kunyuesoft.model.domain.SysResourceRole">
+        update sys_resource_role
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="resourceRoleName != null and resourceRoleName != ''">resource_role_name = #{resourceRoleName},</if>
+            <if test="resourceRoleKey != null and resourceRoleKey != ''">resource_role_key = #{resourceRoleKey},</if>
+            <if test="createBy != null and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isDeleted != null and isDeleted != ''">is_deleted = #{isDeleted},</if>
+        </trim>
+        where resource_role_id = #{resourceRoleId}
+    </update>
+
+    <delete id="deleteSysResourceRoleById" parameterType="Long">
+        delete from sys_resource_role where resource_role_id = #{resourceRoleId}
+    </delete>
+
+    <delete id="deleteSysResourceRoleByIds" parameterType="String">
+        delete from sys_resource_role where resource_role_id in 
+        <foreach item="resourceRoleId" collection="array" open="(" separator="," close=")">
+            #{resourceRoleId}
+        </foreach>
+    </delete>
+    
+</mapper>

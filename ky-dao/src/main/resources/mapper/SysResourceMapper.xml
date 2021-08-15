@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kunyuesoft.dao.mapper.SysResourceMapper">
+    
+    <resultMap type="com.kunyuesoft.model.domain.SysResource" id="SysResourceResult">
+        <result property="resourceId"    column="resource_id"    />
+        <result property="resourceName"    column="resource_name"    />
+        <result property="resourceNumber"    column="resource_number"    />
+        <result property="parentId"    column="parent_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isDeleted"    column="is_deleted"    />
+    </resultMap>
+
+    <sql id="selectSysResourceVo">
+        select resource_id, resource_name, resource_number, parent_id, create_by, create_time, update_by, update_time, is_deleted from sys_resource
+    </sql>
+
+    <select id="selectSysResourceList" parameterType="com.kunyuesoft.model.domain.SysResource" resultMap="SysResourceResult">
+        <include refid="selectSysResourceVo"/>
+        <where>  
+            <if test="resourceName != null  and resourceName != ''"> and resource_name like concat('%', #{resourceName}, '%')</if>
+            <if test="resourceNumber != null  and resourceNumber != ''"> and resource_number like concat('%', #{resourceNumber}, '%')</if>
+            <if test="parentId != null  and parentId != ''"> and parent_id like concat('%', #{parentId}, '%')</if>
+            <if test="isDeleted != null  and isDeleted != ''"> and is_deleted like concat('%', #{isDeleted}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectSysResourceById" parameterType="Long" resultMap="SysResourceResult">
+        <include refid="selectSysResourceVo"/>
+        where resource_id = #{resourceId}
+    </select>
+        
+    <insert id="insertSysResource" parameterType="com.kunyuesoft.model.domain.SysResource" useGeneratedKeys="true" keyProperty="resourceId">
+        insert into sys_resource
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="resourceName != null and resourceName != ''">resource_name,</if>
+            <if test="resourceNumber != null and resourceNumber != ''">resource_number,</if>
+            <if test="parentId != null">parent_id,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null and updateBy != ''">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isDeleted != null and isDeleted != ''">is_deleted,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="resourceName != null and resourceName != ''">#{resourceName},</if>
+            <if test="resourceNumber != null and resourceNumber != ''">#{resourceNumber},</if>
+            <if test="parentId != null">#{parentId},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isDeleted != null and isDeleted != ''">#{isDeleted},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSysResource" parameterType="com.kunyuesoft.model.domain.SysResource">
+        update sys_resource
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="resourceName != null and resourceName != ''">resource_name = #{resourceName},</if>
+            <if test="resourceNumber != null and resourceNumber != ''">resource_number = #{resourceNumber},</if>
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="createBy != null and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isDeleted != null and isDeleted != ''">is_deleted = #{isDeleted},</if>
+        </trim>
+        where resource_id = #{resourceId}
+    </update>
+
+    <delete id="deleteSysResourceById" parameterType="Long">
+        delete from sys_resource where resource_id = #{resourceId}
+    </delete>
+
+    <delete id="deleteSysResourceByIds" parameterType="String">
+        delete from sys_resource where resource_id in 
+        <foreach item="resourceId" collection="array" open="(" separator="," close=")">
+            #{resourceId}
+        </foreach>
+    </delete>
+    
+</mapper>

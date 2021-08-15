@@ -1,0 +1,24 @@
+package com.kunyuesoft.model.domain;
+
+
+import lombok.Data;
+import com.kunyuesoft.model.dtos.admin.base.BaseEntity;
+
+/**
+ * 角色菜单对象 sys_role_menu
+ * 
+ * @author kunyuesoft
+ * @date Fri Aug 13 15:27:32 CST 2021
+ */
+@Data
+public class SysRoleMenu extends BaseEntity
+{
+    private static final long serialVersionUID = 1L;
+
+    /** 角色Id */
+    private int roleId;
+
+    /** 菜单Id */
+    private int menuId;
+
+}
